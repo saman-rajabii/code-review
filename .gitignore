@@ -1,0 +1,11 @@
+# Configs
+.env
+
+# Dependencies
+node_modules
+
+# Editors
+.idea
+
+# pakcage lock
+package-lock.json
