@@ -9,3 +9,6 @@ node_modules
 
 # pakcage lock
 package-lock.json
+
+# build
+/dist
