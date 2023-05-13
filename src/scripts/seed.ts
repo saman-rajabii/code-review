@@ -1,23 +1,18 @@
-import mongoose from "mongoose";
-import _ from "lodash";
-import { Profile } from "../models/Profile";
-import { Simulator } from "../models/Simulator";
-import { Favorite } from "../models/Favorite";
-import { DBURL } from "../config";
+import mongoose from "../db/mongodb";
+import { logger } from "../libs";
+import { Profile } from "../models";
+import { Simulator } from "../models";
+import { Favorite } from "../models";
 
 (async () => {
-
-  mongoose.connect(DBURL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  logger.logInfo("start seeding");
 
   const profile = new Profile({
-    name: `String`,
-    email: `String`,
-    capital: `123`,
-    divisa: `String`,
-    prefered_cryptocurrency: `String`,
+    name: "String",
+    email: "String",
+    capital: 123,
+    divisa: "String",
+    prefered_cryptocurrency: "String",
   });
   await profile.save();
 
@@ -46,6 +41,8 @@ import { DBURL } from "../config";
     favorite3: `String`,
   });
   await favorite.save();
+
+  logger.logInfo("end seeding");
 
   mongoose.disconnect();
 })();
