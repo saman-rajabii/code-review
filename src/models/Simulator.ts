@@ -1,10 +1,23 @@
-import mongoose from "mongoose";
+import mongoose from "../db/mongodb";
 
 const { Schema } = mongoose;
 
+export interface ISimulator extends mongoose.Document {
+  profile_id: mongoose.Types.ObjectId;
+  dateRecorded: Date;
+  cryptocurrency: string;
+  euros: number;
+  price: number;
+  quantity: number;
+}
+
 const schema = new Schema(
   {
-    profile_id: Schema.Types.ObjectId,
+    profile_id: {
+      type: mongoose.Types.ObjectId,
+      ref: "Profile",
+      // required: true,
+    },
     dateRecorded: Date,
     cryptocurrency: String,
     euros: Number,
@@ -16,4 +29,4 @@ const schema = new Schema(
   }
 );
 
-export const Simulator = mongoose.model("Simulator", schema);
+export default mongoose.model<ISimulator>("Simulator", schema);
