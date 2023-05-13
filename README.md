@@ -2,7 +2,7 @@
 
 
 
-#### First glance:
+#### First glance
 
 There is a project that is not completed and many things made in the wrong way.
 You can check the original build (before the changes) in the `main` branch, and check the `after changes` branch to see the current state.
@@ -10,7 +10,7 @@ I was asked to edit the project and prepare it for production.
 
 Let's go!
 
-#### Problems and solutions:
+#### Problems and solutions
 
 1- _Modularity_, the first and most important thing that chaches the eyes is that, the project isn't modular.
 As you know it is a bad practice, especially about those projects which become grow over time
@@ -211,12 +211,17 @@ async   function   getFavoritesByProfileId(
 
 To prepare the project for production, i dockerized it and added `docker-compose.yml` to gather two parties together backend and database.
 
+
 ______________________
+
 
 **To start follow below steps:**
 
 1- Add .env file in the root and like `.env.example`, then add your configuration there.
+
 2- To run the project use this command: `docker-compose up -d`
+
 3- To stop the project use this command `docker-compose down`
+
 4- To run seed after the containers have been started, use this command `docker-compose exec test-backend /bin/sh -c "npm run seed"`
 
