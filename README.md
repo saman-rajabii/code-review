@@ -5,7 +5,7 @@
 #### First glance
 
 There is a project that is not completed and many things made in the wrong way.
-You can check the original build (before the changes) in the `main` branch, and check the `after changes` branch to see the current state.
+You can check the original build (before the changes) in the `main` branch, and check the `develop` branch to see the current state.
 I was asked to edit the project and prepare it for production.
 
 Let's go!
