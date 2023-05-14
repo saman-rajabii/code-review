@@ -5,9 +5,7 @@ const { Schema } = mongoose;
 export interface IFavorite extends mongoose.Document {
   profile_id: mongoose.Types.ObjectId;
   name: string;
-  favorite1: string;
-  favorite2: string;
-  favorite3: string;
+  favorites: string[];
 }
 
 const schema = new Schema(
@@ -18,9 +16,7 @@ const schema = new Schema(
       // required: true,
     },
     name: String,
-    favorite1: String,
-    favorite2: String,
-    favorite3: String,
+    favorites: [String],
   },
   {
     timestamps: true,
