@@ -12,9 +12,9 @@ As you know it is a bad practice, especially about those projects which become g
 It is the main reason of chaos in the source code and makes difficult to maintain in the future.
 Layering structure comes to help us in this scope (i describe the new structure in the next section)
 
-2- _Redundancy_, There were several redundancies that increase the complexity of code that are eliminated with the help of modularity.
+2- _Redundancy_, There were several redundancies that increase the complexity of code such as database connection definition or routing version that are eliminated with the help of modularity.
 
-3- _security_, before change, there was no validation in the system.All of the inputs came without validity checking and definitely it wasn't secure.
+3- _Security_, before change, there was no validation in the system.All of the inputs came without validity checking and definitely it wasn't secure.
 By adding validation middleware on each route, i solved security concern in this scope.
 
 4- _Logs_, there were multiple logs within the source code that crowded the code and i organized them by adding logger manager.
