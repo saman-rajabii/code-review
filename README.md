@@ -77,7 +77,7 @@ I added handlers to make fault tolerance within the code.
 
 As you can see, the project divided to different layers:
 
-`rourers → middlewares/validations → controllers → services → models`
+`rourers → controllers → services → models`
 
 All of the layers follow the same structure, each one has their own directory and whithin that, there is an **index** file that organizes import/export the module to the other part of code.
 apart from the main modules, there are some modules that used as an helper such as **libs** and **enums**.
