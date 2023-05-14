@@ -36,9 +36,7 @@ import { Favorite } from "../models";
   const favorite = new Favorite({
     profile_id: idProfile,
     name: `String`,
-    favorite1: `String`,
-    favorite2: `String`,
-    favorite3: `String`,
+    favorites: [`String1`, `String2`, `String3`],
   });
   await favorite.save();
 
