@@ -93,7 +93,10 @@ Layers respectively:
 - **Middlewares**: This layer provides middlewares which are located at the beginning and at the end of the requests path to do manipulation and checking on the requests.
 - **Validations**: this layer validates incoming data in the requests before reching the controller
 
-2- I assigned interface structure to each mongodb model to clarify what their data format is.
+2- I changed routing name from singular to plural to follow routes best practice convention eg `profile/` → `profiles/`.
+I also added the route version in the first layer of the routes module so that I can change or add another version in one place whenever needed. `app.use("/api/v1", routes);`
+
+3- I assigned interface structure to each mongodb model to clarify what their data format is.
 It helps to manipulate and access to the related data's properties through editor inteligence (i'm using vscode)
 
 look at the following example:
@@ -111,7 +114,7 @@ interface IFavorite extends mongoose.Document {
 export default mongoose.model<IFavorite>("Favorite", schema);
 ```
 
-3- To address validating inputs, i added `express-validation` package which configured and worked as a middleware on each route to validate passed data within request's body, params and query.
+4- To address validating inputs, i added `express-validation` package which configured and worked as a middleware on each route to validate passed data within request's body, params and query.
 In addition used from `joi` package to check structure of data within valiadators.
 
 look at the following example :
@@ -131,7 +134,7 @@ const createProfileValidation = validate(
 );
 ```
 
-4- To organize the logs over the project, i made a logger based on `winston` package.
+5- To organize the logs over the project, i made a logger based on `winston` package.
 The logger provides two log type **info** and **error**.
 I used them instead of `console.log()` in the source code.
 
@@ -159,11 +162,11 @@ logger.logInfo("createSimulator", simulator);
 
 **Note**: The logger also can be integrated with the other tools such as elasticsearch inorder to store logs there, but to keep simplicity we used `winston.transports.Console()`.
 
-5- Over the project, i added response format where return response nedded:
+6- Over the project, i added response format where return response nedded:
 There are two types of response as follows:
 For successful result: `{ data: {} }` and for error result: `{ message: "...", error: "..." | {} }`
 
-6- Error handling, the missing part in the project!
+7- Error handling, the missing part in the project!
 I added `try catch` block in all of the controllers logic, to increase fault tolerance, in addition handled some errors within the codes and prepared approperiate response for them.
 Finally `errorHandler.middleware` , the most important thing in this scope which is responsible to handle unhandled errors in the context.
 
