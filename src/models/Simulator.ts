@@ -16,13 +16,29 @@ const schema = new Schema(
     profile_id: {
       type: mongoose.Types.ObjectId,
       ref: "Profile",
-      // required: true,
+      required: true,
+      index: true,
     },
-    dateRecorded: Date,
-    cryptocurrency: String,
-    euros: Number,
-    price: Number,
-    quantity: Number,
+    dateRecorded: {
+      type: Date,
+      required: true,
+    },
+    cryptocurrency: {
+      type: String,
+      required: true,
+    },
+    euros: {
+      type: Number,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+    quantity: {
+      type: Number,
+      required: true,
+    },
   },
   {
     timestamps: true,
