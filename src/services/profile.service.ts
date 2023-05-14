@@ -20,12 +20,12 @@ async function getProfileById(id: string): Promise<IProfile> {
 }
 
 async function createProfile(data: Partial<IProfile>): Promise<IProfile> {
-  const profile = Profile.findOne({
+  const profile = await Profile.findOne({
     $or: [{ email: data.email }, { nickname: data.nickname }],
   }).exec();
 
   if (!profile) {
-    return Profile.create(data);
+    return await Profile.create(data);
   }
   return profile;
 }
