@@ -23,43 +23,21 @@ async function getSimulators(
   }
 }
 
-async function getSimulatorByProfileId(
-  request: Request,
-  response: Response,
-  next: NextFunction
-) {
-  try {
-    const { profile_id } = request.params;
-
-    logger.logInfo("getSimulatorByProfileId", profile_id);
-
-    const profile = await profileService.getProfileById(profile_id);
-
-    if (!profile) {
-      response
-        .status(STATUS_CODES.NOT_FOUND)
-        .send({ message: MESSAGES.PROFILE_NOT_FOUND });
-    }
-
-    const simulators = await simulatorService.getSimulatorsByProfileId(
-      profile_id
-    );
-
-    response.status(STATUS_CODES.SUCCESS).send({ data: simulators });
-  } catch (error) {
-    next(error);
-  }
-}
-
 async function createSimulator(
   request: Request,
   response: Response,
   next: NextFunction
 ) {
   try {
-    const { simulator } = request.body;
+    const simulator = request.body;
 
-    logger.logInfo("createSimulator", simulator);
+    const profile = await profileService.getProfileById(simulator.profile_id);
+
+    if (!profile) {
+      response
+        .status(STATUS_CODES.NOT_FOUND)
+        .send({ message: MESSAGES.PROFILE_NOT_FOUND });
+    }
 
     const res = await simulatorService.createSimulator(simulator);
 
@@ -71,6 +49,5 @@ async function createSimulator(
 
 export default {
   getSimulators,
-  getSimulatorByProfileId,
   createSimulator,
 };
