@@ -6,7 +6,7 @@ export default (error: Error, request: Request, response: Response) => {
   if (error instanceof ValidationError) {
     return response.status(STATUS_CODES.BAD_REQUEST).send({
       message: error.message,
-      error: error,
+      error: error.details,
     });
   }
 
