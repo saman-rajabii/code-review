@@ -10,10 +10,4 @@ router.get(
   favoriteController.getFavorites
 );
 
-router.get(
-  "/:profile_id",
-  favoriteValidation.getFavoritesByProfileIdValidation,
-  favoriteController.getFavoritesByProfileId
-);
-
 export default router;
