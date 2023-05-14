@@ -26,10 +26,28 @@ const createProfileValidation = validate(
         email: joi.string().required(),
         name: joi.string().required(),
         nickname: joi.string().required(),
+        capital: joi.number().required(),
+        divisa: joi.string().required(),
+        preferredCryptocurrency: joi.string().required(),
       })
       .required(),
   },
   { keyByField: true }
 );
 
-export default { getProfilesValidation, createProfileValidation };
+const getProfileValidation = validate(
+  {
+    params: joi
+      .object({
+        id: joi.string().required(),
+      })
+      .required(),
+  },
+  { keyByField: true }
+);
+
+export default {
+  getProfilesValidation,
+  createProfileValidation,
+  getProfileValidation,
+};
