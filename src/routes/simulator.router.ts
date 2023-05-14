@@ -2,7 +2,7 @@ import express from "express";
 import { simulatorValidation } from "../validations";
 import { simulatorController } from "../controllers";
 
-export var router = express.Router();
+export const router = express.Router();
 
 router.get(
   "/",

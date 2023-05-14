@@ -13,10 +13,18 @@ const schema = new Schema(
     profile_id: {
       type: mongoose.Types.ObjectId,
       ref: "Profile",
-      // required: true,
+      required: true,
     },
-    name: String,
-    favorites: [String],
+    name: {
+      type: String,
+      required: true,
+    },
+    favorites: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
   },
   {
     timestamps: true,

@@ -1,17 +1,16 @@
 import { SORT_MODES } from "../enums";
 import { Profile, IProfile } from "../models";
 async function getProfiles(
-  condition: any = {},
   pageNumber = 1,
   pageSize = 20,
   sort = SORT_MODES.DSC
 ): Promise<[Partial<IProfile>[], number]> {
-  const profiles = await Profile.find(condition)
+  const profiles = await Profile.find()
     .lean()
     .skip((pageNumber - 1) * pageSize)
     .limit(pageSize)
     .sort({ createdAt: sort == SORT_MODES.ASC ? 1 : -1 });
-  const profilesCount = await Profile.countDocuments(condition);
+  const profilesCount = await Profile.countDocuments();
 
   return [profiles, profilesCount];
 }

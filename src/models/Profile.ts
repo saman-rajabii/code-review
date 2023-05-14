@@ -8,17 +8,35 @@ export interface IProfile extends mongoose.Document {
   email: string;
   capital: number;
   divisa: string;
-  prefered_cryptocurrency: string;
+  preferredCryptocurrency: string;
 }
 
 const schema = new Schema(
   {
-    name: String,
-    nickname: String,
-    email: String,
-    capital: Number,
-    divisa: String,
-    prefered_cryptocurrency: String,
+    name: {
+      type: String,
+      required: true,
+    },
+    nickname: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    capital: {
+      type: Number,
+      required: true,
+    },
+    divisa: {
+      type: String,
+      required: true,
+    },
+    preferredCryptocurrency: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,
