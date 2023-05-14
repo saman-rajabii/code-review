@@ -12,7 +12,7 @@ As you know it is a bad practice, especially about those projects which become g
 It is the main reason of chaos in the source code and makes difficult to maintain in the future.
 Layering structure comes to help us in this scope (i describe the new structure in the next section)
 
-2- _Redundancy_, There were several redundancies that increase the complexity of code such as database connection definition or routing version that are eliminated with the help of modularity.
+2- _Redundancy_, there were several redundancies that increase the complexity of code such as database connection definition or routing version that are eliminated with the help of modularity.
 
 3- _Security_, before change, there was no validation in the system.All of the inputs came without validity checking and definitely it wasn't secure.
 By adding validation middleware on each route, i solved security concern in this scope.
@@ -77,7 +77,7 @@ I added handlers to make fault tolerance within the code.
 
 As you can see, the project divided to different layers:
 
-rourers → middlewares/validations → controllers → services → models
+`rourers → middlewares/validations → controllers → services → models`
 
 All of the layers follow the same structure, each one has their own directory and whithin that, there is an **index** file that organizes import/export the module to the other part of code.
 apart from the main modules, there are some modules that used as an helper such as **libs** and **enums**.
@@ -96,6 +96,8 @@ Layers respectively:
 2- I changed routing name from singular to plural to follow routes best practice convention eg `profile/` → `profiles/`.
 I also added the route version in the first layer of the routes module so that I can change or add another version in one place whenever needed. `app.use("/api/v1", routes);`
 
+3- I added pagination on get all routes to handle the range of data in their responses.
+
 3- I assigned interface structure to each mongodb model to clarify what their data format is.
 It helps to manipulate and access to the related data's properties through editor inteligence (i'm using vscode)
 
@@ -105,9 +107,7 @@ look at the following example:
 interface IFavorite extends mongoose.Document {
   profile_id: mongoose.Types.ObjectId;
   name: string;
-  favorite1: string;
-  favorite2: string;
-  favorite3: string;
+  favorites: string[];
 }
 
 //export
