@@ -1,4 +1,3 @@
-import { omit } from "lodash";
 import { NextFunction, Request, Response } from "express";
 import { profileService, simulatorService } from "../services";
 import { MESSAGES, SORT_MODES, STATUS_CODES } from "../enums";
@@ -12,10 +11,7 @@ async function getSimulators(
   try {
     const { pageNumber, pageSize, sort } = request.query;
 
-    const condition = omit(request.query, ["pageNumber", "pageSize", "sort"]);
-
     const [simulators, count] = await simulatorService.getSimulators(
-      condition,
       Number(pageNumber),
       Number(pageSize),
       <SORT_MODES>sort
