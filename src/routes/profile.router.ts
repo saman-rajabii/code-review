@@ -2,7 +2,7 @@ import express from "express";
 import { profileController } from "../controllers";
 import { profileValidation } from "../validations";
 
-export var router = express.Router();
+export const router = express.Router();
 
 router.get(
   "/",
