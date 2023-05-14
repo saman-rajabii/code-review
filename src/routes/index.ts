@@ -6,8 +6,8 @@ import simulatorRouter from "./simulator.router";
 
 const router = Router();
 
-router.use("/favorite", favoriteRouter);
-router.use("/profile", profileRouter);
-router.use("/simulator", simulatorRouter);
+router.use("/favorites", favoriteRouter);
+router.use("/profiles", profileRouter);
+router.use("/simulators", simulatorRouter);
 
 export default router;
