@@ -10,6 +10,18 @@ router.get(
   profileController.getProfiles
 );
 
+router.get(
+  "/:id/simulators",
+  profileValidation.getProfileValidation,
+  profileController.getSimulators
+);
+
+router.get(
+  "/:id/favorites",
+  profileValidation.getProfileValidation,
+  profileController.getFavorites
+);
+
 router.post(
   "/",
   profileValidation.createProfileValidation,
