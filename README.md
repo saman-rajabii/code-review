@@ -1,4 +1,4 @@
-### Code-Review Project
+### Test Project
 
 #### First glance
 
@@ -98,7 +98,9 @@ I also added the route version in the first layer of the routes module so that I
 
 3- I added pagination on get all routes to handle the range of data in their responses.
 
-4- I assigned interface structure to each mongodb model to clarify what their data format is.
+4- I moved `get profile's simulators` and `get profile's favorites` API to profile router module, because both of them related to profile scope
+
+5- I assigned interface structure to each mongodb model to clarify what their data format is.
 It helps to manipulate and access to the related data's properties through editor inteligence (i'm using vscode)
 
 look at the following example:
@@ -114,59 +116,57 @@ interface IFavorite extends mongoose.Document {
 export default mongoose.model<IFavorite>("Favorite", schema);
 ```
 
-5- To address validating inputs, i added `express-validation` package which configured and worked as a middleware on each route to validate passed data within request's body, params and query.
+6- To address validating inputs, i added `express-validation` package which configured and worked as a middleware on each route to validate passed data within request's body, params and query.
 In addition used from `joi` package to check structure of data within valiadators.
 
 look at the following example :
 
 ```typescript
-const createProfileValidation = validate(
+const createSimulatorValidation = validate(
   {
-    body: joi
-      .object({
-        email: joi.string().required(),
-        name: joi.string().required(),
-        nickname: joi.string().required(),
-      })
-      .required(),
+    body: joi.object({
+      profile_id: joi.objectId().required(),
+      dateRecorded: joi.date().required(),
+      cryptocurrency: joi.string().required(),
+      euros: joi.number().positive().required(),
+      price: joi.number().positive().required(),
+      quantity: joi.number().positive().required(),
+    }),
   },
   { keyByField: true }
 );
 ```
 
-6- To organize the logs over the project, i made a logger based on `winston` package.
+7- To organize the logs over the project, i made a logger based on `winston` package.
 The logger provides two log type **info** and **error**.
 I used them instead of `console.log()` in the source code.
 
 logger structure and usage:
 
 ```typescript
-import winston from "winston";
+// logger module
 
-const logConfiguration = {
-  transports: [new winston.transports.Console()],
-};
-
-const logger = winston.createLogger(logConfiguration);
-
-export function logInfo(message: string, meta: any) {
-  logger.info(message, meta);
+...
+function logInfo(message: string, meta: any = {}) {
+  logger.log("info", message, { detail: JSON.stringify(meta) });
 }
-export function logError(error: Error, meta: any) {
-  logger.error(error.message, meta);
+
+function logError(message: string, error: Error) {
+  logger.log("error", message, { error });
 }
+...
 
 // usage
-logger.logInfo("createSimulator", simulator);
+logger.logInfo(`Mongodb Connection was successful`);
 ```
 
 **Note**: The logger also can be integrated with the other tools such as elasticsearch inorder to store logs there, but to keep simplicity we used `winston.transports.Console()`.
 
-7- Over the project, i added response format where return response nedded:
+8- Over the project, i added response format where return response nedded:
 There are two types of response as follows:
-For successful result: `{ data: {} }` and for error result: `{ message: "...", error: "..." | {} }`
+For successful result: `{ data: {} }` and for error result: `{ message: "...", error: {} | [] | void }`
 
-8- Error handling, the missing part in the project!
+9- Error handling, the missing part in the project!
 I added `try catch` block in all of the controllers logic, to increase fault tolerance, in addition handled some errors within the codes and prepared approperiate response for them.
 Finally `errorHandler.middleware` , the most important thing in this scope which is responsible to handle unhandled errors in the context.
 
@@ -180,23 +180,29 @@ look at the flow:
 Here is an example how errors handled in controller:
 
 ```typescript
-async   function   getFavoritesByProfileId(
- request:   Request,
- response:   Response,
- next:   NextFunction
+async function createSimulator(
+  request: Request,
+  response: Response,
+  next: NextFunction
 ) {
-    try {
-         const { profile_id } =   request.params;
-         const   profile   =   await   profileService.getProfileById(profile_id);
+  try {
+    const simulator = request.body;
 
-        if (!profile) {
-            response.status(STATUS_CODES.NOT_FOUND).send({ message:   MESSAGES.PROFILE\_NOT\_FOUND });
-        }
-         const   favorites   =   await   favoriteService.getFavoritesByProfileId(profile_id);
-         response.status(STATUS_CODES.SUCCESS).send({ data:   favorites });
-    } catch (error) {
-        next(error);
+    const profile = await profileService.getProfileById(simulator.profile_id);
+
+    if (!profile) {
+      // return 404 stats response
+      return response
+        .status(STATUS_CODES.NOT_FOUND)
+        .send({ message: MESSAGES.PROFILE_NOT_FOUND });
     }
+
+    const res = await simulatorService.createSimulator(simulator);
+
+    response.status(STATUS_CODES.SUCCESS).send({ data: res });
+  } catch (error) {
+    next(error); // direct the error to error handler middleware
+  }
 }
 ```
 
