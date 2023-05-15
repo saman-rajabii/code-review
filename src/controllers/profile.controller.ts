@@ -49,7 +49,7 @@ async function getSimulators(
     const profile = await profileService.getProfileById(id);
 
     if (!profile) {
-      response
+      return response
         .status(STATUS_CODES.NOT_FOUND)
         .send({ message: MESSAGES.PROFILE_NOT_FOUND });
     }
@@ -75,7 +75,7 @@ async function getFavorites(
     const profile = await profileService.getProfileById(id);
 
     if (!profile) {
-      response
+      return response
         .status(STATUS_CODES.NOT_FOUND)
         .send({ message: MESSAGES.PROFILE_NOT_FOUND });
     }
