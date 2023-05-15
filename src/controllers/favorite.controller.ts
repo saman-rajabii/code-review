@@ -23,33 +23,6 @@ async function getFavorites(
   }
 }
 
-async function getFavoritesByProfileId(
-  request: Request,
-  response: Response,
-  next: NextFunction
-) {
-  try {
-    const { profile_id } = request.params;
-
-    const profile = await profileService.getProfileById(profile_id);
-
-    logger.logInfo("getFavoritesByProfileId", profile_id);
-
-    if (!profile) {
-      response
-        .status(STATUS_CODES.NOT_FOUND)
-        .send({ message: MESSAGES.PROFILE_NOT_FOUND });
-    }
-
-    const favorites = await favoriteService.getFavoritesByProfileId(profile_id);
-
-    response.status(STATUS_CODES.SUCCESS).send({ data: favorites });
-  } catch (error) {
-    next(error);
-  }
-}
-
 export default {
   getFavorites,
-  getFavoritesByProfileId,
 };

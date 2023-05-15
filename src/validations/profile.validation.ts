@@ -1,6 +1,10 @@
+// @ts-nocheck
 import joi from "joi";
+import objectIdValidation from "joi-objectid";
 import { validate } from "express-validation";
 import { SORT_MODES } from "../enums";
+
+joi.objectId = objectIdValidation(joi);
 
 const getProfilesValidation = validate(
   {
@@ -26,10 +30,28 @@ const createProfileValidation = validate(
         email: joi.string().required(),
         name: joi.string().required(),
         nickname: joi.string().required(),
+        capital: joi.number().required(),
+        divisa: joi.string().required(),
+        preferredCryptocurrency: joi.string().required(),
       })
       .required(),
   },
   { keyByField: true }
 );
 
-export default { getProfilesValidation, createProfileValidation };
+const getProfileValidation = validate(
+  {
+    params: joi
+      .object({
+        id: joi.objectId().required(),
+      })
+      .required(),
+  },
+  { keyByField: true }
+);
+
+export default {
+  getProfilesValidation,
+  createProfileValidation,
+  getProfileValidation,
+};

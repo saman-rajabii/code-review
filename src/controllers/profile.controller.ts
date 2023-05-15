@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { profileService } from "../services";
-import { SORT_MODES, STATUS_CODES } from "../enums";
+import { favoriteService, profileService, simulatorService } from "../services";
+import { MESSAGES, SORT_MODES, STATUS_CODES } from "../enums";
 
 async function getProfiles(
   request: Request,
@@ -28,7 +28,7 @@ async function createProfile(
   next: NextFunction
 ) {
   try {
-    const { profile } = request.body;
+    const profile = request.body;
 
     const res = await profileService.createProfile(profile);
 
@@ -38,7 +38,61 @@ async function createProfile(
   }
 }
 
+async function getSimulators(
+  request: Request,
+  response: Response,
+  next: NextFunction
+) {
+  try {
+    const { id } = request.params;
+
+    const profile = await profileService.getProfileById(id);
+
+    if (!profile) {
+      return response
+        .status(STATUS_CODES.NOT_FOUND)
+        .send({ message: MESSAGES.PROFILE_NOT_FOUND });
+    }
+
+    const simulators = await simulatorService.getSimulatorsByProfileId(
+      profile._id
+    );
+
+    response.status(STATUS_CODES.SUCCESS).send({ data: simulators });
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function getFavorites(
+  request: Request,
+  response: Response,
+  next: NextFunction
+) {
+  try {
+    const { id } = request.params;
+
+    const profile = await profileService.getProfileById(id);
+
+    if (!profile) {
+      return response
+        .status(STATUS_CODES.NOT_FOUND)
+        .send({ message: MESSAGES.PROFILE_NOT_FOUND });
+    }
+
+    const favorites = await favoriteService.getFavoritesByProfileId(
+      profile._id
+    );
+
+    response.status(STATUS_CODES.SUCCESS).send({ data: favorites });
+  } catch (error) {
+    next(error);
+  }
+}
+
 export default {
   getProfiles,
   createProfile,
+  getSimulators,
+  getFavorites,
 };

@@ -1,6 +1,10 @@
+// @ts-nocheck
 import joi from "joi";
+import objectIdValidation from "joi-objectid";
 import { validate } from "express-validation";
 import { SORT_MODES } from "../enums";
+
+joi.objectId = objectIdValidation(joi);
 
 const getSimulatorValidation = validate(
   {
@@ -19,30 +23,15 @@ const getSimulatorValidation = validate(
   { keyByField: true }
 );
 
-const getSimulatorByProfileIdValidation = validate(
-  {
-    params: joi
-      .object({
-        profile_id: joi.string().required(),
-      })
-      .required(),
-  },
-  { keyByField: true }
-);
-
 const createSimulatorValidation = validate(
   {
-    params: joi
-      .object({
-        profile_id: joi.string().required(),
-      })
-      .required(),
     body: joi.object({
-      dateRecorded: joi.date(),
-      cryptocurrency: joi.string(),
-      euros: joi.number().positive(),
-      price: joi.number().positive(),
-      quantity: joi.number().positive(),
+      profile_id: joi.objectId().required(),
+      dateRecorded: joi.date().required(),
+      cryptocurrency: joi.string().required(),
+      euros: joi.number().positive().required(),
+      price: joi.number().positive().required(),
+      quantity: joi.number().positive().required(),
     }),
   },
   { keyByField: true }
@@ -50,6 +39,5 @@ const createSimulatorValidation = validate(
 
 export default {
   getSimulatorValidation,
-  getSimulatorByProfileIdValidation,
   createSimulatorValidation,
 };

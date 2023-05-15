@@ -19,15 +19,5 @@ const getFavoritesValidation = validate(
   { keyByField: true }
 );
 
-const getFavoritesByProfileIdValidation = validate(
-  {
-    params: joi
-      .object({
-        profile_id: joi.string().required(),
-      })
-      .required(),
-  },
-  { keyByField: true }
-);
 
-export default { getFavoritesValidation, getFavoritesByProfileIdValidation };
+export default { getFavoritesValidation };

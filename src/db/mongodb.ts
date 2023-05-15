@@ -1,16 +1,20 @@
 import mongoose from "mongoose";
-import { DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_PORT } from "../config";
+import config from "../config";
+import { logger } from "../libs";
+
+const { host, usename, password, databaseName, port } = config.database;
 
 mongoose
   .connect(
-    `mongodb://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}?authSource=admin`,
+    `mongodb://${usename}:${password}@${host}:${port}/${databaseName}?authSource=admin`,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     }
   )
   .then(() => {
-    console.log(`Connected to DB`);
-  });
+    logger.logInfo(`Mongodb Connection was successful`);
+  })
+  .catch((err) => logger.logError("Mongodb Connection Error", err));
 
 export default mongoose;

@@ -12,7 +12,8 @@ import { Favorite } from "../models";
   const profile = new Profile({
     _id: profileId,
     name: "Name",
-    email: "Nickname",
+    nickname: "Nickname",
+    email: "Email",
     capital: 123,
     divisa: "Divisa",
     preferredCryptocurrency: "preferredCryptocurrency",

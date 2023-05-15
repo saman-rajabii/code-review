@@ -10,14 +10,8 @@ router.get(
   simulatorController.getSimulators
 );
 
-router.get(
-  "/:profile_id",
-  simulatorValidation.getSimulatorByProfileIdValidation,
-  simulatorController.getSimulatorByProfileId
-);
-
 router.post(
-  "/:profile_id",
+  "/",
   simulatorValidation.createSimulatorValidation,
   simulatorController.createSimulator
 );
