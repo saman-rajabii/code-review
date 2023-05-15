@@ -1,6 +1,10 @@
+// @ts-nocheck
 import joi from "joi";
+import objectIdValidation from "joi-objectid";
 import { validate } from "express-validation";
 import { SORT_MODES } from "../enums";
+
+joi.objectId = objectIdValidation(joi);
 
 const getSimulatorValidation = validate(
   {
@@ -22,7 +26,7 @@ const getSimulatorValidation = validate(
 const createSimulatorValidation = validate(
   {
     body: joi.object({
-      profile_id: joi.string().required(),
+      profile_id: joi.objectId().required(),
       dateRecorded: joi.date().required(),
       cryptocurrency: joi.string().required(),
       euros: joi.number().positive().required(),
