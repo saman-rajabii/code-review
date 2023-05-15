@@ -1,6 +1,10 @@
+// @ts-nocheck
 import joi from "joi";
+import objectIdValidation from "joi-objectid";
 import { validate } from "express-validation";
 import { SORT_MODES } from "../enums";
+
+joi.objectId = objectIdValidation(joi);
 
 const getProfilesValidation = validate(
   {
@@ -39,7 +43,7 @@ const getProfileValidation = validate(
   {
     params: joi
       .object({
-        id: joi.string().required(),
+        id: joi.objectId().required(),
       })
       .required(),
   },
