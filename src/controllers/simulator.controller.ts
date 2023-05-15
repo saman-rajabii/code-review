@@ -34,7 +34,7 @@ async function createSimulator(
     const profile = await profileService.getProfileById(simulator.profile_id);
 
     if (!profile) {
-      response
+      return response
         .status(STATUS_CODES.NOT_FOUND)
         .send({ message: MESSAGES.PROFILE_NOT_FOUND });
     }
