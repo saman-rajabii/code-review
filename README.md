@@ -1,13 +1,12 @@
-### Test Project
+## Test Project
 
-#### First glance
 
-The project was incomplete and some things made incorrectly.
-The following content is an explanation of how to prepare this project to go production.
 
-#### Problems and solutions
+The following content shows us how this project prepared to go production.
 
-1- _Modularity_, the first and most important thing that chaches the eyes is that, the project isn't modular.
+### Problems and solutions
+
+1- _Modularity_, the first and most important thing that catches the eyes is that, the project isn't modular.
 As you know it is a bad practice, especially about those projects which become grow over time
 It is the main reason of chaos in the source code and makes difficult to maintain in the future.
 Layering structure comes to help us in this scope (i describe the new structure in the next section)
@@ -25,7 +24,7 @@ So I made right format for all responses within the system.
 6- _Error handling_, the last thing that had not considered in the code was the error handler.
 I added handlers to make fault tolerance within the code.
 
-#### What i did, in details
+### What i did, in details
 
 1- New structure
 
@@ -206,7 +205,7 @@ async function createSimulator(
 }
 ```
 
-##### Finally
+### Finally
 
 To prepare the project for production, i dockerized it and added `docker-compose.yml` to gather two parties together backend and database.
 
