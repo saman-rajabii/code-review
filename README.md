@@ -3,6 +3,7 @@
 
 
 The following content shows us how this project prepared to go production.
+To see the original structure before any changes, switch to `original` branch.
 
 ### Problems and solutions
 
